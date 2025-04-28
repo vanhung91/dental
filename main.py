@@ -31,8 +31,9 @@ def read_root():
 @app.post("/ask")
 async def ask_question(body: QuestionRequest):
     question = body.question
+    openai.api_key = os.getenv("OPENAI_API_KEY")  # Lấy API Key ngay lúc request
 
-    if not OPENAI_API_KEY:
+    if not openai.api_key:
         return {"error": "API Key không tồn tại trên server"}
 
     try:

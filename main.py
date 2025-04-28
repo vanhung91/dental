@@ -23,6 +23,9 @@ openai.api_key = OPENAI_API_KEY
 # Định nghĩa body nhận câu hỏi
 class QuestionRequest(BaseModel):
     question: str
+@app.get("/env")
+def read_env():
+    return dict(os.environ)
 
 @app.get("/")
 def read_root():

@@ -31,10 +31,13 @@ def read_root():
 @app.post("/ask")
 async def ask_question(body: QuestionRequest):
     question = body.question
-    openai.api_key = os.getenv("OPENAI_API_KEY")  # Lấy API Key ngay lúc request
+    api_key_check = os.getenv("OPENAI_API_KEY")
+    print(f"API KEY thực tế server đọc được lúc request: {api_key_check}")  # <-- Dòng này thêm vào!
 
-    if not openai.api_key:
+    if not api_key_check:
         return {"error": "API Key không tồn tại trên server"}
+
+    openai.api_key = api_key_check
 
     try:
         response = openai.ChatCompletion.create(
